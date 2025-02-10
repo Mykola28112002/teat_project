@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");
 const http = require("http");
 const { Server } = require("socket.io");
 const bcrypt = require("bcryptjs");
