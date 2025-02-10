@@ -4,28 +4,23 @@ const http = require("http");
 const { Server } = require("socket.io");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const SECRET_KEY = "supersecret"; // В реальному проєкті використовуй .env
-const User = require("./models/User");
-const userController = require("./controllers/userController");
-const dns = require("dns");
-dns.setDefaultResultOrder("ipv4first");
-// ✅ 1. Підключення до MongoDB перед запуском сервера
 const mongoose = require("mongoose");
+const dns = require("dns");
 require("dotenv").config(); // Додаємо підтримку .env
 
+const SECRET_KEY = process.env.SECRET_KEY || "supersecret";
+const User = require("./models/User");
+const userController = require("./controllers/userController");
+
+dns.setDefaultResultOrder("ipv4first");
+
+// ✅ 1. Підключення до MongoDB перед запуском сервера
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
   .then(() => console.log("✅ Підключено до MongoDB"))
   .catch(err => console.error("❌ Помилка підключення:", err));
-
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`🚀 Сервер запущено на порті ${PORT}`);
-});
-
-
 
 // ✅ 2. Middleware (розпарсування JSON)
 app.use(express.json());
@@ -89,7 +84,8 @@ app.post("/login", async (req, res) => {
   res.json({ message: "Вхід успішний", token });
 });
 
-// ✅ 7. Запуск сервера (тільки `server.listen`)
-server.listen(3000, () => {
-  console.log("🚀 Сервер запущено на http://localhost:3000");
+// ✅ 7. Запуск сервера (правильний варіант!)
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`🚀 Сервер запущено на порті ${PORT}`);
 });
