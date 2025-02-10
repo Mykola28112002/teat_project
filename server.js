@@ -10,9 +10,8 @@ const User = require("./models/User");
 const userController = require("./controllers/userController");
 
 // ✅ 1. Підключення до MongoDB перед запуском сервера
-mongoose.connect("mongodb://127.0.0.1:27017/mydatabase")
-  .then(() => console.log("✅ Підключено до MongoDB"))
-  .catch(err => console.error("❌ Помилка підключення:", err));
+mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/mydatabase")
+
 
 // ✅ 2. Middleware (розпарсування JSON)
 app.use(express.json());
