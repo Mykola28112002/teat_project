@@ -15,10 +15,8 @@ const userController = require("./controllers/userController");
 dns.setDefaultResultOrder("ipv4first");
 
 // ✅ 1. Підключення до MongoDB перед запуском сервера
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log("✅ Підключено до MongoDB"))
   .catch(err => console.error("❌ Помилка підключення:", err));
 
