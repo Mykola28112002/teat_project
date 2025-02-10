@@ -8,9 +8,19 @@ const jwt = require("jsonwebtoken");
 const SECRET_KEY = "supersecret"; // В реальному проєкті використовуй .env
 const User = require("./models/User");
 const userController = require("./controllers/userController");
-
+const dns = require("dns");
+dns.setDefaultResultOrder("ipv4first");
 // ✅ 1. Підключення до MongoDB перед запуском сервера
-mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/mydatabase")
+const mongoose = require("mongoose");
+require("dotenv").config(); // Додаємо підтримку .env
+
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+  .then(() => console.log("✅ Підключено до MongoDB"))
+  .catch(err => console.error("❌ Помилка підключення:", err));
+
 
 
 // ✅ 2. Middleware (розпарсування JSON)
