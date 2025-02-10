@@ -83,7 +83,7 @@ app.post("/login", async (req, res) => {
 });
 
 // ✅ 7. Запуск сервера (правильний варіант!)
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
   console.log(`🚀 Сервер запущено на порті ${PORT}`);
 });
