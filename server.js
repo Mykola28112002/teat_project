@@ -96,7 +96,9 @@ app.get("/test", (req, res) => {
 setInterval(() => {
   console.log("✅ Сервер активний...");
 }, 10000);
-
+process.on("exit", (code) => {
+  console.log(`❌ Сервер завершує роботу з кодом ${code}`);
+});
 // ✅ 7. Запуск сервера (правильний варіант!)
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
