@@ -48,7 +48,15 @@ app.get("/", (req, res) => {
   res.send("Сервер працює!");
 });
 
-app.get("/users", userController.getUsers);
+app.get("/users", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    console.error("❌ Помилка у /users:", error);
+    res.status(500).json({ error: "Помилка сервера" });
+  }
+});
 
 // ✅ 5. Реєстрація
 app.post("/register", async (req, res) => {
@@ -82,6 +90,12 @@ app.post("/login", async (req, res) => {
   res.json({ message: "Вхід успішний", token });
 });
 
+app.get("/test", (req, res) => {
+  res.json({ message: "Тестовий маршрут працює!" });
+});
+setInterval(() => {
+  console.log("✅ Сервер активний...");
+}, 10000);
 // ✅ 7. Запуск сервера (правильний варіант!)
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
