@@ -49,14 +49,17 @@ app.get("/", (req, res) => {
 });
 
 app.get("/users", async (req, res) => {
+  console.log("🔵 /users запит отримано!");
   try {
     const users = await User.find();
+    console.log("🟢 Знайдені користувачі:", users);
     res.json(users);
   } catch (error) {
     console.error("❌ Помилка у /users:", error);
     res.status(500).json({ error: "Помилка сервера" });
   }
 });
+
 
 // ✅ 5. Реєстрація
 app.post("/register", async (req, res) => {
